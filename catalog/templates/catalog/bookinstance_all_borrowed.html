@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+        {% if perms.catalog.can_mark_returned %}
+            <h1 class="center">All Borrewed Books</h1>
+            <ul class="menu">
+                <li><a href="{% url 'books' %}">Books</a></li>
+                <li><a href="">Date due back</a></li>
+                <li><a href="">User</a></li>
+            </ul>
+            
+            
+            {% if bookinstance_list %}
+                 <ul>                
+                    {% for booklist in bookinstance_list %}
+                        <li>            
+                            <a href="{% url 'book-detail' booklist.book.pk %}">
+                                {{ booklist.book.title }}
+                            </a>  
+                            {{ booklist.due_back }} 
+                            {{ booklist.borrower }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>There are no books borrower</p>
+            {% endif %}    
+        {% else %}
+            <h2>You no have Permissions for this page</h2>
+        {% endif %}    
+    {% endblock %}

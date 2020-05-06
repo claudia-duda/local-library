@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <h1>Local Library Home</h1>
+    <p>Welcome to library, a website developed to studyng</p>
+    <ul>
+        <li><strong>Books with letter a: </strong>{{ num_books }}</li>
+        <li><strong>Copies: </strong>{{ num_instances }}</li>
+        <li><strong>Copies availables: </strong>{{ num_instances_available }}</li>
+        <li><strong>Authors: </strong>{{ num_authors }}</li>
+        <li><strong>Types Genrer: </strong>{{ num_genres }}</li>
+    </ul>
+    <p>You have visited this page {{ num_visits }}
+    {% if num_visits == 1 %} 
+        time
+    {% else %}      
+        times
+    {% endif %}.</p>
+    {% endblock %}
