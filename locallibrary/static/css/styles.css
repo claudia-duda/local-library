@@ -7,11 +7,14 @@ body,ul,li,p{
 }
 a{
     text-decoration: none;
+    color: red;
 }
+
 .header{
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    background-color: grey;
 }
 .menu{
     display:flex;
@@ -21,4 +24,17 @@ a{
     padding:10px;
     
 }
-
+.container li a{
+    flex-direction:row;
+    display:flex;
+    margin-left: 10px;
+}
+.container ul{
+    display: flex;
+    margin-left: 10px;
+}
+.img-responsive{
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+}

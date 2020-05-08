@@ -17,7 +17,7 @@
                             <a href="{% url 'book-detail' booklist.book.pk %}">
                                 {{ booklist.book.title }}
                             </a>  
-                            {{ booklist.due_back }} 
+                            {{ booklist.due_back }} <a href="{% url 'renew-book-librarian' booklist.id %}">(Renew)</a>
                             {{ booklist.borrower }}
                         </li>
                     {% endfor %}

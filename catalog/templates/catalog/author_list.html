@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
     {% block content %}
         <h1>List Authors</h1>
+        <a href="{% url 'author-create' %}">Create a new Author</a>
         {% if author_list %}
             <ul>
                 {% for author in author_list %}

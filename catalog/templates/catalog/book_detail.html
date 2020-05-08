@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     <h1>Title: {{ book.title }}</h1>
+    {% if book.book_photo %}                
+        <img src="{{ book.book_photo.url }}" alt="have image" class="img-responsive"> 
+    {% else %}
+        <img src="{% static 'img/img.jpg' %}" alt="image" class="img-responsive">  
+    {% endif %} 
     <p><strong>Author: </strong>
         <a href="{% url 'author-detail' book.author.pk %}"> {{ book.author }}</a></p>
     <p><strong>Summary: </strong>{{ book.sumary }}</p>
@@ -15,6 +20,7 @@
             {% endif %}  
         {% endfor %}
     </p>
+
 
     <div style="margin-left:20px;margin-top:20px;">
         <h4>Copies</h4>
@@ -36,4 +42,5 @@
             <p class="text-muted"><strong>Id: </strong>{{ copy.id }}</p>
         {% endfor %}
     </div>
+    <a href="{% url 'book-delete' book.pk %}">Delete this Book here</a>
 {% endblock %}

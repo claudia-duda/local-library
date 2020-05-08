@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+    {% block content %}
+        <h1>Delete Author/book</h1>
+        <p>Are you sure you want to delete the author/book: 
+            <a href=""> future link to acess especific book or author </a>
+            ?
+        </p>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="submit" value = "Yes, delete.">
+        </form>
+        
+    {% endblock %}
