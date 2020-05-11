@@ -2,6 +2,9 @@
 {% load static %}
 {% block content %}
     <h1>Title: {{ book.title }}</h1>
+
+    {% include "partials/_crud-menu.html" %}
+
     {% if book.book_photo %}                
         <img src="{{ book.book_photo.url }}" alt="have image" class="img-responsive"> 
     {% else %}
