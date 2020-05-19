@@ -1,9 +1,11 @@
 {% load static %}
-<ul class="menu">
-    <li>
-        <a href="">Edit</a>
-    </li>
-    <li>
-        <a href="">Delete</a>
-    </li>
-</ul>
+{% if perms.catalog.can_mark_returned %}
+    <ul class="menu">
+        <li>
+            <a href="">Edit</a>
+        </li>
+        <li>
+            <a href="">Delete</a>
+        </li>
+    </ul>
+{% endif %}

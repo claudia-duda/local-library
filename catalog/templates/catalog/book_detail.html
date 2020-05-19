@@ -45,5 +45,7 @@
             <p class="text-muted"><strong>Id: </strong>{{ copy.id }}</p>
         {% endfor %}
     </div>
-    <a href="{% url 'book-delete' book.pk %}">Delete this Book here</a>
+    {% if perms.catalog.can_mark_returned %}
+        <a href="{% url 'book-delete' book.pk %}">Delete this Book here</a>
+    {% endif %}
 {% endblock %}

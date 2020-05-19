@@ -2,7 +2,10 @@
 {% load static %}
 {% block content %}
     <h1 class="center"> Book List</h1>
-    <a href="{% url 'book-create' %}">Create a new Author</a>
+    {% if perms.catalog.can_mark_returned %}
+        <a href="{% url 'book-create' %}">Create a new Author</a>
+    {% endif %}
+    
     {% if book_list %}
     <div class="container">
         <ul>

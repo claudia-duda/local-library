@@ -1,20 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% if perms.catalog.can_mark_returned %}
+        <h1>
+            {% if form.instance.pk %}
+                Update 
+            {% else %}
+                Create 
+            {% endif %}
+                Author/Book
+        </h1>
 
-   <h1>
-    {% if form.instance.pk %}
-        Update 
+            <form action = "" method="POST">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Submit">
+            </form>
     {% else %}
-        Create 
-    {% endif %}
-        Author/Book
-   </h1>
-
-    <form action = "" method="POST">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <input type="submit" value="Submit">
-    </form>
+        <h2>You no have Permissions for this page</h2>
+    {% endif %}   
 {% endblock %}    

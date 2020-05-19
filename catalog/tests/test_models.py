@@ -1,5 +1,5 @@
 from django.test import TestCase
-from catalog.models import Author,Book
+from catalog.models import Author,Book,Genre,BookInstance
 # Create your tests here.
 class AuthorModelTest(TestCase):
 
@@ -32,15 +32,67 @@ class AuthorModelTest(TestCase):
         expected_object_name = f'{author.last_name}, {author.first_name}'
         self.assertEquals(expected_object_name, str(author))
 
-    def test_det_absolute_url(self):
+    def test_get_absolute_url(self):
         author = Author.objects.get(id= 1)
         # This will also fail if the urlconf is not defined.
         self.assertEquals(author.get_absolute_url(), '/catalog/author/1/')
 
 """Create tests to models"""
-#class BookModelTest(TestCase):
+
+
+class BookModelTest(TestCase):
     
-    #@classmethod
-    #def setUpTestData(cls):
-    #    Book.objects.create()  
+    @classmethod
     
+    def setUpTestData(cls):
+        author = Author.objects.create(first_name="Jonathan",last_name="Felipe")
+        #genrer1 = Genre.object.create(name="Education")
+        #genrer2 = Genre.object.create(name="Mitology")
+        book = Book.objects.create(title ='Test Book', author = author, summary = "Description to test", isbn = "1234567891012")
+       
+
+    def test_book_display_genre(self):
+        book = Book.objects.get(id=1)
+        genre1 = book.genre.create(name ="Education")
+        genre2 = book.genre.create(name = "Mitology")
+        expected_name=f'{genre1}, {genre2}'
+
+        self.assertEquals(book.display_genre(), expected_name)
+
+    def test_book_string_represent_model(self):
+        book = Book.objects.get(id=1)
+        expected_name= book.title
+        
+        self.assertEquals(str(book), book.title)
+
+    def test_get_url_book(self):    
+        book = Book.objects.get(id=1)
+        self.assertEquals(book.get_absolute_url(), '/catalog/book/1/')
+
+"""Test to book instance"""
+from django.contrib.auth.models import User,Group
+import datetime
+class BookInstanceTest(TestCase):
+    
+    @classmethod
+
+    def setUpTestData(cls):
+        author = Author.objects.create(first_name="Jonathan",last_name="Felipe")
+        book = Book.objects.create(title ='Test Book', author = author, summary = "Description to test", isbn = "1234567891012")
+       
+        default_user = User.objects.create_user('default', password='default.password')
+        default_user.is_staff = True
+
+        user_library = User.objects.create_user('testlibrary', password='test.password')
+        user_library.is_staff = True
+
+        group = Group.objects.create(name='Library Members')
+        group.user_set.add(user_library)
+        
+
+        book_instance1 = BookInstance.objects.create(borrower=User.objects.get(username='testlibrary'),book=book)
+        book_instance2 = BookInstance.objects.create(borrower=User.objects.get(username='default'),book=book)
+
+ #def test_all_get_absolute_url(self):
+        #book = BookInstance.objects.filter(borrower="testlibrary")
+        #self.assertEquals(book.get_absolute_url, "/catalog/mybooks/")

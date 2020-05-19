@@ -1,2 +1,5 @@
+*.bak
+
+# Database
+*.sqlite3
 venv
-__pycache__

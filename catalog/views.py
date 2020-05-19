@@ -32,7 +32,7 @@ def index(request):
 
     return render(request , 'index.html' , context=context)
 
-@permission_required('can_mark_returned')
+@permission_required('catalog.can_mark_returned')
 def renew_book_librarian(request, pk):
     """View function for renewing a specific BookInstance by librarian."""
     book_instance = get_object_or_404(BookInstance, pk=pk)
@@ -77,7 +77,7 @@ class BookDetailView(generic.DetailView):
 class AuthorListView(generic.ListView):
     """Generic class-based view for a list of Authors."""
     model = Author
-    paginate_by = 5
+    paginate_by = 10
 
 class AuthorDetailView(generic.DetailView):
     
@@ -86,7 +86,7 @@ class AuthorDetailView(generic.DetailView):
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     """Generic view listing books on loan to current user"""
     model = BookInstance
-    paginate_by = 1
+    paginate_by = 10
     template_name ='catalog/bookinstance_list_borrowed_user.html'
 
     def get_queryset(self):#restrict for user 
@@ -97,6 +97,7 @@ class AllBooksBorrowedListView(PermissionRequiredMixin, generic.ListView):
     model = BookInstance
     permission_required = 'catalog.can_mark_returned'#value to define on model book instance
     template_name = 'catalog/bookinstance_all_borrowed.html'
+    paginate_by = 5
 
     def get_queryset(self):
 
@@ -112,37 +113,42 @@ from catalog.models import Author
 
 """ Create Update and Delete to Authors"""
 
-class AuthorCreate(CreateView):
+class AuthorCreate(PermissionRequiredMixin,CreateView):
     model = Author
     fields = '__all__'
     initial = {'date_of_death': '05/01/2018'}
     template_name= 'catalog/default-forms/default_form.html'
+    permission_required = 'catalog.can_mark_returned'
 
-class AuthorUpdate(UpdateView):
+class AuthorUpdate(PermissionRequiredMixin,UpdateView):
     model = Author
     fields = ['first_name' , 'last_name' , 'date_of_birth' , 'date_of_death']   
     template_name = 'catalog/default-forms/default_form.html'
-class AuthorDelete(DeleteView):
+    permission_required = 'catalog.can_mark_returned'
+class AuthorDelete(PermissionRequiredMixin,DeleteView):
     model = Author
     template_name= 'catalog/default-forms/default_confirm_delete.html'
-
+    permission_required = 'catalog.can_mark_returned'
     success_url = reverse_lazy('authors')# redirect to list authors
     
 
 
 """ Create Update and Delete to Authors"""
 
-class BookCreate(CreateView):
+class BookCreate(PermissionRequiredMixin,CreateView):
     model= Book
     fields ='__all__'
     initial = {'summary':'brief description'}
     template_name= 'catalog/default-forms/default_form.html'
-class BookUpdate(UpdateView):
+    permission_required = 'catalog.can_mark_returned'
+class BookUpdate(PermissionRequiredMixin,UpdateView):
     model=Book
     fields = ['title', 'author', 'isbn']
     template_name= 'catalog/default-forms/default_form.html'
+    permission_required = 'catalog.can_mark_returned'
 
-class BookDelete(DeleteView):
+class BookDelete(PermissionRequiredMixin,DeleteView):
     model=Book
     template_name= 'catalog/default-forms/default_confirm_delete.html'
     success_url = reverse_lazy('books')# redirect to list authors
+    permission_required = 'catalog.can_mark_returned'
