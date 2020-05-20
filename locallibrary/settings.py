@@ -132,9 +132,12 @@ DATABASES['default'].update(db_from_env)
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'locallibrary/static')
-]
+#STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR,'locallibrary/static')
+ #] 
+# Static file serving.
+# http://whitenoise.evans.io/en/stable/django.html#django-middleware
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #Media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
