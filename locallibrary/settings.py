@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('DJANDO_SERCRET_KEY' , 'cg#p$g+j9tax!#a3cup@1$8obt2_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG' , '') != 'False' #Tru in default and false if  only django_debug its too
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com','127.0.0.1']
 
 LOGIN_REDIRECT_URL = '/'
 # Application definition
