@@ -5,8 +5,9 @@ from . import views
 urlpatterns = [
     path('' , views.index, name='index'),
     path('books/' , views.BookListView.as_view(), name='books'),    
-    path('authors/', views.AuthorListView.as_view(), name='authors'),   
-  
+    path('authors/' , views.AuthorListView.as_view(), name='authors'),
+    path('about/' , views.about, name= 'about'),
+    
 ]
 
 """Crud to authors"""
@@ -19,17 +20,18 @@ urlpatterns += [
 
 """Crud to books"""
 urlpatterns+=[
-    path('book/create/' , views.BookCreate.as_view() , name='book-create'),
-    path('book/<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),
-    path('book/<int:pk>/update/' , views.BookUpdate.as_view() , name='book-update'),
-    path('book/<int:pk>/delete/' , views.BookDelete.as_view() , name='book-delete'),
+    path('book/create/' , views.BookCreate.as_view(), name='book-create'),
+    path('book/<int:pk>/' , views.BookDetailView.as_view(), name='book-detail'),
+    path('book/<int:pk>/update/' , views.BookUpdate.as_view(), name='book-update'),
+    path('book/<int:pk>/delete/' , views.BookDelete.as_view(), name='book-delete'),
 
 ]
 """Crud to Renew"""
 urlpatterns+=[
-    #create
-    path('allbooks/', views.AllBooksBorrowedListView.as_view(), name='all-borrowed'),
+    path('newbookinstance/', views.InstanceBookCreate.as_view() , name='borrowed-create'),
+    path('allbookinstance/', views.AllBooksBorrowedListView.as_view(), name='all-borrowed'),
     path('book/<uuid:pk>/renew/' , views.renew_book_librarian, name='renew-book-librarian'),  
+    path('bookinstance/<uuid:pk>/delete/', views.BookInstanceDelete.as_view(), name='delete-instance')
     #delete
 ]
 """ Acess to User"""

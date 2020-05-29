@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
     {% block content %}
-        <h1>Renew: {{ book_instance.title }}</h1>
+        <h1>Renew: {{ book_instance.book.title }}</h1>
         <p>Borrower: {{ book_instance.borrower }}</p>
         <p {% if book_instance.is_overdue %}
              class="text-danger"
@@ -13,6 +13,6 @@
                 {{ form.as_table }}
             </table>
             <input type="submit" value="Submit">
-
         </form>
+        <a href="{% url 'delete-instance' book_instance.pk %}">Delete</a>
     {% endblock %}

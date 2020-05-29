@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('DJANDO_SERCRET_KEY' , 'cg#p$g+j9tax!#a3cup@1$8obt2_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG' , '') != 'False' #Tru in default and false if  only django_debug its too
 
-ALLOWED_HOSTS = ['.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = '/'
 # Application definition
@@ -33,6 +33,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 INSTALLED_APPS = [
     'catalog',
+    'pessoas',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,10 +82,14 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mynewdb',
+        'USER': 'postgres',
+        'PASSWORD': 'duda123',
+        'HOST': 'localhost',
+        'PORT': '',
     }
-}
+}   
 
 
 # Password validation
@@ -132,12 +137,9 @@ DATABASES['default'].update(db_from_env)
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR,'locallibrary/static')
- #] 
-# Static file serving.
-# http://whitenoise.evans.io/en/stable/django.html#django-middleware
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'locallibrary/static')
+]
 
 #Media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

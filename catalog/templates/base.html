@@ -17,16 +17,18 @@
       <nav>
         <ul class="menu">
           <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="{% url 'books' %}">All books</a></li>
-          <li><a href="{% url 'authors' %}">All authors</a></li>
+          <li><a href="{% url 'books' %}">Books</a></li>
+          <!--li><a href="{% url 'authors' %}">All authors</a></li>-->
+          <li><a href="{% url 'about' %}">About</a></li>
 
           {% if user.is_authenticated %}
-
-            <li>User: {{ user.get_username }}</li>
-            <li><a href="{% url 'my-borrowed' %}">My Borrowed</a></li>
+            
+            <li><a href="{% url 'my-borrowed' %}">My Borrowed</a></li>         
             {% if perms.catalog.can_mark_returned %}
-              <li><a href="{% url 'all-borrowed' %}">All Borrowed</a></li>           
+              <li><a href="{% url 'borrowed-create' %}">Create Instance Book</a></li>
+              <li><a href="{% url 'all-borrowed' %}">All Borrowed</a></li>          
             {% endif %}
+            <li>User: {{ user.get_username }}</li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
           {% else %}
             <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>  

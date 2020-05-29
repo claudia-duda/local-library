@@ -13,6 +13,44 @@ from django.contrib.auth.decorators import permission_required
 def index(request):
     """view function for home page of site"""
     
+    info='Recents added'
+
+    new_books= Book.objects.order_by('-date_here')[:3]
+    
+    context = {
+       'info':info,
+       'new_books':new_books
+    }
+    return render(request, 'index.html' , context=context)  
+'''def cadastro(request):
+    if request.method == 'POST':
+        nome = request.POST['nome']
+        email = request.POST['email']
+        senha = request.POST['password']
+        senha2 = request.POST['password2']
+        if campo_vazio(nome):
+            messages.error(request , 'O campo nome não pode ficar em branco')
+            return redirect('cadastro')
+        if campo_vazio(email):
+            messages.error(request , 'O campo email não pode ficar em branco')
+            return redirect('cadastro')
+        if senhas_nao_sao_iguais(senha,senha2):
+            messages.error(request , 'As senhas não são iguais')
+            return redirect('cadastro')
+        if User.objects.filter(email=email).exists():
+            messages.error(request , 'Usuário já cadastrado')
+            return redirect('cadastro') 
+        if User.objects.filter(username=nome).exists():
+            messages.error(request , 'Usuário já cadastrado')
+            return redirect('cadastro')
+        user = User.objects.create_user(username=nome, email=email, password=senha)
+        user.save()
+        messages.success(request, 'User registed')
+        return redirect('login')
+    else:
+        return render(request,'usuarios/cadastro.html')  '''
+
+def about(request):
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
     num_instances_available = BookInstance.objects.filter(status__exact='a').count()
@@ -30,8 +68,9 @@ def index(request):
         'num_visits': num_visits,
     }    
 
-    return render(request , 'index.html' , context=context)
+    return render(request , 'about.html' , context=context)
 
+    
 @permission_required('catalog.can_mark_returned')
 def renew_book_librarian(request, pk):
     """View function for renewing a specific BookInstance by librarian."""
@@ -69,6 +108,13 @@ class BookListView(generic.ListView):
     """Generic class-based view for a list of books."""
     model = Book
     paginate_by = 5
+    
+    def get_queryset(self):
+        book_list = Book.objects.all()
+        query = self.request.GET.get('title',None)
+        if query:
+            return book_list.filter(title__icontains = query)
+        return book_list
 
 class BookDetailView(generic.DetailView):
     """Generic class-based view for a detail of books."""
@@ -152,3 +198,27 @@ class BookDelete(PermissionRequiredMixin,DeleteView):
     template_name= 'catalog/default-forms/default_confirm_delete.html'
     success_url = reverse_lazy('books')# redirect to list authors
     permission_required = 'catalog.can_mark_returned'
+
+class InstanceBookCreate(PermissionRequiredMixin, CreateView):
+    model = BookInstance
+    fields='__all__'
+    proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+    initial={'due_back' : proposed_renewal_date}
+    template_name = 'catalog/default-forms/default_form.html'
+    permission_required = 'catalog.can_mark_returned'
+    success_url = reverse_lazy('all-borrowed')
+
+
+class BookInstanceDelete(PermissionRequiredMixin, DeleteView):
+    model= BookInstance
+    template_name= 'catalog/default-forms/default_confirm_delete.html'
+    permission_required= 'catalog.can_mark_returned'
+    success_url = reverse_lazy('all-borrowed')
+
+'''class InstanceBookUpdate(PermissionRequiredMixin, UpdateView):
+    model = BookInstance
+    Fields={'due_back'}
+    proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+    initial={'due_back' : proposed_renewal_date}
+    template_name='catalog/default-dorms/default_form.html'
+    permission_required='catalog.can_mark_returned'''

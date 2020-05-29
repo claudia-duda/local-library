@@ -47,5 +47,6 @@
     </div>
     {% if perms.catalog.can_mark_returned %}
         <a href="{% url 'book-delete' book.pk %}">Delete this Book here</a>
+        <p><strong>Date here:</strong> {{ book.date_here }}</p>
     {% endif %}
 {% endblock %}

@@ -1,18 +1,21 @@
 {% extends 'base.html'%}
-
+{% load static %}
 {% block content %}
-    <h1>Local Library Home</h1>
-    <p>Welcome to library, a website developed to studyng</p>
-    <ul>
-        <li><strong>Books: </strong>{{ num_books }}</li>
-        <li><strong>Copies: </strong>{{ num_instances }}</li>
-        <li><strong>Copies availables: </strong>{{ num_instances_available }}</li>
-        <li><strong>Authors: </strong>{{ num_authors }}</li>
-    </ul>
-    <p>You have visited this page {{ num_visits }}
-    {% if num_visits == 1 %} 
-        time
-    {% else %}      
-        times
-    {% endif %}.</p>
-    {% endblock %}
+    <h1> Welcome to library </h1>
+    <p> need add a validation for date in create book instance,create profile to user and create new account</p>
+    <h2> {{ info }}</h2>
+    {% if new_books %}
+        {% for book in new_books %}
+        {% if book.book_photo %}                
+            <img src="{{ book.book_photo.url }}" alt="have image" class="img-responsive"> 
+        {% else %}
+            <img src="{% static 'img/img.jpg' %}" alt="image" class="img-responsive">  
+        {% endif %} 
+        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+        {% endfor %}
+    {% else %}
+    <p>Any books yet</p>
+    {% endif %}
+    <a href="{% url 'books' %}">See more</a>
+    <p>{{ new_product }}</p>
+{% endblock %}
