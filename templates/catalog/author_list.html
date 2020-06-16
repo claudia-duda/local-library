@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+    {% block content %}
+        <h1>List Authors</h1>
+        {% if perms.catalog.can_mark_returned %}
+            <a href="{% url 'author-create' %}">Create a new Author</a>
+        {% endif %}
+
+        {% if author_list %}
+            <ul>
+                {% for author in author_list %}
+                    <li>
+                        <a href="{{ author.get_absolute_url }}">{{ author.last_name }} {{ author.first_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p> There are no authors in the library</p>
+        {% endif %}
+
+    {% endblock %}        
+    

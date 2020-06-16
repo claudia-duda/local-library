@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <h1 class="center"> Book List</h1>
+    {% if perms.catalog.can_mark_returned %}
+        <a href="{% url 'book-create' %}">Create a new Author</a>
+    {% endif %}
+    
+    <div class="search">
+        <div class="container">
+            <div class="row">
+                <div class = "col-12">
+                    <form action="" method="GET">
+                        <input type="text" name='title' placeholder="Search">
+                        <button type=submit></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if book_list %}
+        <div class="container">
+            <ul>
+                {% for book in book_list %}
+                <li>
+                    {% if book.book_photo %}                
+                        <img src="{{ book.book_photo.url }}" alt="have image" class="img-responsive"> 
+                    {% else %}
+                        <img src="{% static 'img/img.jpg' %}" alt="image" class="img-responsive">  
+                    {% endif %} 
+                        
+                    <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>({{ book.author }})
+                    <!-- <a href =" {{ book.author.get_absolute_url }}">({{ book.author }})</a> -->
+                    
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+     <p> There are no book in the library</p>
+    {% endif %}
+{% endblock %}
+    

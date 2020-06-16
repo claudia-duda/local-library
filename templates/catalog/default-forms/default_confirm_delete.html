@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+    {% block content %}
+        {% if perms.catalog.can_mark_returned %}
+            <h1>Delete Author/book</h1>
+            <p>Are you sure you want to delete the author/book: 
+                <a href=""> future link to acess especific book or author </a>
+                ?
+            </p>
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="submit" value = "Yes, delete.">
+            </form>
+        
+       
+        {% else %}
+            <h2>You no have Permissions for this page</h2>
+        {% endif %}   
+    {% endblock %}

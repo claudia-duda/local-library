@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+    {% block content %}
+    <h2>Author {{ author }}</h1>
+        <p><strong>First Name: </strong>{{ author.first_name }}</p>
+        <p><strong>Last Name: </strong>{{ author.last_name }}</p>
+        <p><strong>Date of Birth: </strong>{{ author.date_of_birth }}</p>
+        {% if author.date_of_death != null %}   
+            <p><strong>Date of Death: </strong>{{ author.date_of_death }}</p> 
+        {% endif %}
+
+        <div style="margin-left:20px;margin-top:20px;"></div>
+            <dl>                
+                <h2>{{ author.first_name }} Books</h2>
+                {% for bookAuthor in author.book_set.all %}
+                    <dt><a href="{% url 'book-detail' bookAuthor.pk %}">{{ bookAuthor.title }}</a>({{ bookAuthor.bookinstance_set.all.count }})</dt>
+                    <dd>{{ bookAuthor.summary }}</dd>
+                {% endfor %}
+            </dl>
+       </div>        
+    {% endblock %}

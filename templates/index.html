@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+    <h1> Welcome to library </h1>
+    <p> need add a validation for date in create book instance,create profile to user and create new account</p>
+    <a href="https://medium.com/@himanshuxd/how-to-create-registration-login-webapp-with-django-2-0-fd33dc7a6c67">link to crate profile and registration</a>
+    <h2> {{ info }}</h2>
+    {% if new_books %}
+        {% for book in new_books %}
+        {% if book.book_photo %}                
+            <img src="{{ book.book_photo.url }}" alt="have image" class="img-responsive"> 
+        {% else %}
+            <img src="{% static 'img/img.jpg' %}" alt="image" class="img-responsive">  
+        {% endif %} 
+        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+        {% endfor %}
+    {% else %}
+    <p>Any books yet</p>
+    {% endif %}
+    <a href="{% url 'books' %}">See more</a>
+    <p>{{ new_product }}</p>
+{% endblock %}
