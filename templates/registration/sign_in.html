@@ -4,27 +4,41 @@
     
         <h2>Sign in</h2>            
  
-        <form action="{% url 'account-create' %}" method="POST">
+        <form action="{% url 'register' %}" method="POST">
             {% csrf_token %}
             <div class="row">
+
                 <div class="col-12 col-lg-12">
-                    <label for="nome_receita"><b>Full Name</b></label>
-                    <input type="text" class="form-control" name="name" placeholder="Ex.:Guilherme Lima" required>
+                    <label for="first_name"><b>First Name</b></label>
+                    <input type="text" class="form-control" name="first_name" placeholder="Ex.: Guilherme" required>
                 </div>
+
+                <div class="col-12 col-lg-12">
+                    <label for="last_name"><b>Last Name</b></label>
+                    <input type="text" class="form-control" name="last_name" placeholder="Ex.: Lima" required>
+                </div>
+
+                <div class="col-12 col-lg-12">
+                    <label for="username"><b>Your username</b></label>
+                    <input type="text" class="form-control" name="username" placeholder="Ex.: Guilherme.Lima" required>
+                </div>
+
                 <div class="col-12 col-lg-12">
                     <label for="email"><b>Email</b></label>
                     <input type="email" class="form-control" name="email" placeholder="Ex.: guilherme@receitas.com" required>
                 </div>
+
                 <div class="col-12 col-lg-6">
                     <label for="password"><b>Password</b></label>
                     <input type="password" class="form-control" name="password" placeholder="create a password to account" required>
                 </div>
+
                 <div class="col-12 col-lg-6">
                     <label for="password2"><b>Confirm Password</b></label>
                     <input type="password" class="form-control" name="password2" placeholder="confirm your password" required>
                 </div>
                 <div class="col-12 text-center">
-                    <button class="btn btn-success" type="submit">Criar sua conta</button>
+                    <button class="btn btn-success" type="submit">Create</button>
                 </div>
             </div>
         </form>
